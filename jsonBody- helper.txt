@@ -1,0 +1,103 @@
+DEFINITIONS:
+
+In a file name, if speak contains then
+	Speak :- speakers
+	englishspeak :- Questions for english speakers (in any any language)
+
+-----------------------------------------------------
+Endpoint definition:-
+
+  1) localhost:5000/incubator/addques/hindiTo/english
+
+	=> For Hindi speakers, learning english
+
+  	ie:- "incubator teaching" english for "hindi mother tongue"
+
+  2) localhost:5000/incubator/getques/englishTo/french
+
+	=> For English speakers, get french questions to learn
+
+	ie:- "fetches french questions posted by incubator for English mother tongue
+
+-----------------------------------------------------
+STEPS to view changes and create furthur endpoints based on existing:-
+
+1) create model
+2) create controller - import model, and write logic part
+3) create routes - import model, controller
+-
+-------------------------------------------------------
+Json body content:- helper in POSTMAN 
+
+1) For english speakers, learning french:-
+
+{
+    "content": "course",
+    "learner": "english",
+    "teaching": "french",
+    "questionType": "MultipleChoice (text-to-text)",
+    "question": "which of these mean - How are you?",
+    "options": [{
+        "option1": "Comment allez-vous",
+        "option2": "Où es-tu",
+        "option3": "quel est votre nom"
+    }],
+    "answer": "Comment allez-vous"
+}
+
+
+--------------------------------------------
+
+
+{
+    "content": "course",
+    "learner": "english",
+    "teaching": "spanish",
+    "questionType": "MultipleChoice (text-to-text)",
+    "question": "cómo estás",
+    "options": [{
+        "option1": "what is your name?",
+        "option2": "How are you?",
+        "option3": "what is this?"
+    }],
+    "answer": "How are you?"
+}
+
+----------------------------------------------
+
+{
+    "content": "course",
+    "learner": "hindi",
+    "teaching": "spanish",
+    "questionType": "MultipleChoice (text-to-text)",
+    "question": "इनमें से कौन सी बिल्ली है",
+    "options": [{
+        "option1": "gato",
+        "option2": "perro",
+        "option3": "Tigre"
+    }],
+    "answer": "gato"
+}
+
+---------------------------------------------
+
+{
+    "content": "course",
+    "learner": "hindi",
+    "teaching": "english",
+    "questionType": "MultipleChoice (text-to-text)",
+    "question": "इनमें से 'दूध' चुनें",
+    "options": [{
+        "option1": "water",
+        "option2": "milk",
+        "option3": "bread"
+    }],
+    "answer": "milk"
+}
+
+---------------------------------------------
+
+
+
+
+

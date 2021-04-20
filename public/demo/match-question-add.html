@@ -1,0 +1,94 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ungrezi | Add Question</title>
+    <style>
+      #questionInput input {
+        margin-bottom: 12px;
+      }
+      #answerBlocks input {
+        margin-bottom: 12px;
+      }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha512-MoRNloxbStBcD8z3M/2BmnT+rg4IsMxPkXaGh2zD6LGNNFE80W3onsAhRcMAMrSoyWL9xD7Ert0men7vR8LUZg=="
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <form id="question">
+      <h1 class="m-5">Add Question</h1>
+      <div class="m-5 statement w-50">
+        <label for="qs">Enter Statement</label>
+        <input type="text" name="statement" id="qs" class="form-control" />
+      </div>
+      <div class="row m-5">
+        <div class="col-3 flex flex-column">
+          <p>Question blocks</p>
+          <div id="questionInput">
+            <input
+              type="text"
+              id="first-block-question"
+              name="questionBlocks"
+              class="form-control"
+              placeholder="Enter block"
+            />
+            <input
+              type="text"
+              name="questionBlocks"
+              class="form-control"
+              placeholder="Enter block"
+            />
+          </div>
+          <button type="button" class="btn btn-info" id="addBlock">Add</button>
+        </div>
+        <div class="col-3 flex flex-column">
+          <p>Answer blocks</p>
+          <div id="answerBlocks">
+            <input
+              type="text"
+              id="first-block-answer"
+              name="answer"
+              class="form-control"
+              placeholder="Answer"
+            />
+            <input
+              type="text"
+              name="answer"
+              class="form-control"
+              placeholder="Answer"
+            />
+          </div>
+        </div>
+      </div>
+      <button type="submit" class="btn btn-success ml-5">Submit</button>
+    </form>
+
+    <script>
+      $("#addBlock").click(() => {
+        const qB = $("#first-block-question").clone().val("");
+        const qA = $("#first-block-answer").clone().val("");
+
+        $("#questionInput").append(qB);
+        $("#answerBlocks").append(qA);
+      });
+
+      $("#question").submit(function (e) {
+        e.preventDefault();
+        $.post("/question/addBlockMatch", $(this).serialize(), function (
+          data,
+          status
+        ) {
+          alert(data);
+          location = "/";
+        }).fail((e) => {
+          alert(e.responseText);
+        });
+      });
+    </script>
+  </body>
+</html>

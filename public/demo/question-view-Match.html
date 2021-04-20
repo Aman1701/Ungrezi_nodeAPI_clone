@@ -1,0 +1,96 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ungrezi</title>
+    <style>
+      #questionInput {
+        display: inline-grid;
+      }
+      #questionInput button {
+        margin-bottom: 12px;
+      }
+      #answerBlocks {
+        display: inline-grid;
+      }
+      #answerBlocks button {
+        margin-bottom: 12px;
+      }
+      #availableBlocks button {
+        margin: 5px;
+      }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha512-MoRNloxbStBcD8z3M/2BmnT+rg4IsMxPkXaGh2zD6LGNNFE80W3onsAhRcMAMrSoyWL9xD7Ert0men7vR8LUZg=="
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <h3 class="statement m-5"></h3>
+    <form>
+      <div class="row m-5">
+        <div class="col-3 flex flex-column">
+          <p>Question blocks</p>
+          <div id="questionInput"></div>
+        </div>
+        <div class="col-3 flex flex-column">
+          <p>Answer blocks</p>
+          <div id="answerBlocks"></div>
+        </div>
+        <div class="col-5 ml-3">
+          <p>Available Blocks</p>
+          <div id="availableBlocks"></div>
+        </div>
+      </div>
+      <button id="submit" class="btn btn-success m-5">Submit</button>
+    </form>
+
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.bundle.min.js"
+      integrity="sha512-kBFfSXuTKZcABVouRYGnUo35KKa1FBrYgwG4PAx7Z2Heroknm0ca2Fm2TosdrrI356EDHMW383S3ISrwKcVPUw=="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      $.get(
+        "/question/blockMatch/data/" + location.href.split("/")[5],
+        function (data) {
+          $(".statement").text(data.statement);
+          const qb = $("#questionInput");
+          data.questionBlocks.forEach((element) => {
+            qb.append('<button class="btn btn-dark">' + element + "</button>");
+          });
+          const ab = $("#availableBlocks");
+          data.answer.forEach((element) => {
+            ab.append('<button class="btn btn-dark">' + element + "</button>");
+          });
+        }
+      );
+
+      $("#answerBlocks").on("click", "button", function (e) {
+        const option = $(e.target).clone();
+        e.target.remove();
+        option.removeAttr("name");
+        $("#availableBlocks").append(option);
+      });
+
+      $("#availableBlocks").on("click", "button", function (e) {
+        const option = $(e.target).clone().attr("name", "answer");
+        e.target.remove();
+        $("#answerBlocks").append(option);
+      });
+
+      $("#submit").click(() => {
+        let answer = [];
+        $("#answerBlocks button").each(function (i, v) {
+          answer.push(v.innerHTML);
+        });
+        $.post("", "answer=" + answer.join(" "), function (data, status) {
+          alert(data);
+        });
+      });
+    </script>
+  </body>
+</html>

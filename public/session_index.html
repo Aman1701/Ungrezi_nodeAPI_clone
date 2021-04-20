@@ -1,0 +1,37 @@
+<html>
+  <head>
+    <meta name="viewport" content="width=device-width, initial" />
+    <meta charset="utf-8" />
+    <title>Video Conferencing</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;500&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link rel="stylesheet" href="live-session.css" />
+  </head>
+  <body>
+    <div class="container">
+      <div class="form-heading">Enter Session-Id :-</div>
+      <form id="registration">
+        <div class="session-details">
+          <div class="input-box">
+            <label class="session-name" for="name">ID:-</label>
+            <input type="text" id="name" />
+          </div>
+        </div>
+        <div class="button">
+          <input class="submit" type="submit" />
+        </div>
+      </form>
+    </div>
+
+    <script>
+      const form = document.getElementById("registration");
+      form.addEventListener("submit", function (event) {
+        event.preventDefault();
+        location.pathname = `/session/${form.elements.name.value}`;
+      });
+    </script>
+  </body>
+</html>

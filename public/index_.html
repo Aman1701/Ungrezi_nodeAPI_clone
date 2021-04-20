@@ -1,0 +1,642 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ungrezi</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+</head>
+<style>
+
+    h1{
+        text-align: center;
+        font-family: sans-serif;
+        font-weight: 400;
+        font-size: 36px;
+      }
+      
+      div.container {
+          margin-top: 25px;
+          max-width: 1000px;
+          position: relative;
+      }
+      
+      div.container>div.prev,
+      div.container>div.next {
+          position: absolute;
+          z-index: 2;
+          top: 0;
+          width: 40px;
+          height: 100%;
+          background: rgba(0, 0, 0);
+          cursor: pointer;
+      }
+      
+      div.container>div.prev {
+          left: 0;
+      }
+      
+      div.container>div.prev>.arrow-left {
+          height: 20px;
+          width: 20px;
+          border-top: 2px solid #fff;
+          border-right: 2px solid #fff;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          -webkit-transform: translate(-20%, -50%) rotate(225deg);
+          -ms-transform: translate(-20%, -50%) rotate(225deg);
+          -o-transform: translate(-20%, -50%) rotate(225deg);
+          transform: translate(-20%, -50%) rotate(225deg);
+      }
+      
+      div.container>div.next {
+          right: 0;
+      }
+      
+      div.container>div.next>.arrow-right {
+          height: 20px;
+          width: 20px;
+          border-top: 2px solid #fff;
+          border-right: 2px solid #fff;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          -webkit-transform: translate(-70%, -50%) rotate(45deg);
+          -ms-transform: translate(-70%, -50%) rotate(45deg);
+          -o-transform: translate(-70%, -50%) rotate(45deg);
+          transform: translate(-70%, -50%) rotate(45deg);
+      }
+      
+      ul {
+          list-style-type: none;
+          padding: 0;
+          margin: 0;
+          position: relative;
+          height: 500px;
+          max-width: 100%;
+      }
+      
+      li {
+          min-width: 100%;
+          max-width: 1000px;
+          height: 500px;
+          position: absolute;
+          margin-bottom: 60px;
+          margin-left: 40px;
+          top: -20px;
+          left: 0;
+          opacity: 0;
+          transition: 0.6s ease-in-out;
+      }
+      
+      li.visible {
+          opacity: 1;
+          transition: 0.2s ease-in-out;
+      }
+      
+      li>img {
+          display: block;
+          width: 100%;
+          height: 100%;
+      }
+      
+    /*switch creator learner modes*/
+    
+    div.btn-container{
+        display: table-cell;
+        vertical-align: middle;
+        text-align: center;
+        margin-left: 0px;
+    }
+    
+    div.btn-container i{
+        display: inline-block;
+        position: relative;
+        top: -9px;
+    }
+    
+    label {
+        font-size: 15px;
+        color: #424242;
+        font-weight: 800;
+    }
+    
+    .btn-color-mode-switch{
+        display: inline-block;
+        margin: 0px;
+        position: relative;
+    }
+    
+    .btn-color-mode-switch > label.btn-color-mode-switch-inner{
+        margin: 0px;
+        width: 170px;
+        height: 40px;
+        background: #000000;
+        border-radius: 26px;
+        overflow: hidden;
+        position: relative;
+        transition: all 0.3s ease;
+        /*box-shadow: 0px 0px 8px 0px rgba(17, 17, 17, 0.34) inset;*/
+        display: block;
+    }
+    
+    .btn-color-mode-switch > label.btn-color-mode-switch-inner:before{
+        content: attr(data-on);
+        position: absolute;
+        font-size: 15px;
+        font-weight: 800;
+        top: 7px;
+        right: 13px;
+        color: #fff;
+    }
+    
+    .btn-color-mode-switch > label.btn-color-mode-switch-inner:after{
+        content: attr(data-off);
+        width: 80px;
+        height: 30px;
+        background: #fff;
+        border-radius: 26px;
+        position: absolute;
+        left: 5px;
+        top: 5px;
+        text-align: center;
+        transition: all 0.3s ease;
+        box-shadow: 0px 0px 6px -2px #000;
+        padding: 5px 0px;
+    }
+    
+    .btn-color-mode-switch > .alert{
+        display: none;
+        background: #FF9800;
+        border: none;
+        color: #fff;
+    }
+    
+    .btn-color-mode-switch input[type="checkbox"]{
+        cursor: pointer;
+        width: 50px;
+        height: 30px;
+        opacity: 0;
+        position: absolute;
+        bottom: 0px;
+        z-index: 1;
+        margin: 0px;
+    }
+    
+    .btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner{
+        background: #000000;
+        color: #fff;
+    }
+    
+    .btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner:after{
+        content: attr(data-on);
+        left: 85px;
+        top: 5px;
+        background: #ffffff;
+        color: #000;
+    }
+    
+    .btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner:before{
+        content: attr(data-off);
+        right: auto;
+        left: 16px;
+    }
+    
+    .btn-color-mode-switch input[type="checkbox"]:checked + label.btn-color-mode-switch-inner{
+        /*background: #66BB6A; */
+        /*color: #fff;*/
+    }
+    
+    .btn-color-mode-switch input[type="checkbox"]:checked ~ .alert{
+        display: block;
+    }
+    
+    /*mode preview*/
+    .dark-preview{
+        background: #0d0d0d;
+    }
+    
+    .dark-preview div.btn-container i.fa-sun-o{
+        color: #000000;
+    }
+    
+    .dark-preview div.btn-container i.fa-moon-o{
+        color: #fff;
+        text-shadow: 0px 0px 11px #fff;
+    }
+    
+    .white-preview{
+        background: #fff;
+    }
+    
+    .white-preview div.btn-container i.fa-sun-o{
+        color: #ffa500;
+        text-shadow: 0px 0px 16px #ffa500;
+    }
+    
+    .white-preview div.btn-container i.fa-moon-o{
+        color: #000000;
+    }
+    
+    p.by {
+        
+    }
+    
+    p.by a{
+        text-decoration: none;
+        color: #000;
+    }
+    
+    .dark-preview p.by a{
+        color: #fff;
+    }
+    
+    .white-preview p.by a{
+        color: #000;
+    }
+</style>
+
+<body>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <div class="section-one">
+        <div class="flex flex-row items-center justify-between">
+            <div class="logo">
+                <img src="./logo-b.png" alt="ungrezi-logo" width="200px">
+            </div>
+            <div>
+
+            <div class="btn-container sm:pr-5">
+			<label class="switch btn-color-mode-switch">
+		        <input type="checkbox" name="color_mode" id="color_mode" value="1">
+		        <label for="color_mode" data-on="Creator" data-off="Learner" class="ml-2 btn-color-mode-switch-inner bold-text"></label>
+		    </label>
+            </div>
+            </div>
+        </div>
+
+        <div class="" >
+            <div class="section-one-box flex flex-col items-center justify-center">
+                <div class="section-one-intro text-center mt-20">
+                    <h3 class="text-sm">Learn and Progress- Free. Forever !</h3>
+                    <p class="font-thin mt-2">Learn a new language or skill with just 5 minutes a day</p>
+                </div>
+                <div class="section-one-nav flex flex-col items-center">
+                    <button class="py-3 px-16 rounded-full black-button-style mb-2">Get started</button>
+                    <button class="py-3 px-16 rounded-full white-button-style m-2">I Already Have An Account</button>
+                </div>
+            </div>
+            
+            <div class="absolute left-0 bottom-0 mb-4"><img src="assets/svg/illustration/light.svg" class="w-20 md:w-32 lg:w-48" alt="light-illustration"></div>
+            <div class="absolute right-0 bottom-0 mb-4"><img src="assets/svg/illustration/flowerpot.svg"  class="w-24 md:w-32 lg:w-48" alt="flower-illustration" width="">
+    </div>
+  
+    </div>
+</div>
+ <nav class="flex flex-row items-center justify-between navbar-two max-w-100 sticky top-0 ">
+    <div class="logo">
+        <img src="./logo-b.png" alt="ungrezi-logo" width="200px">
+    </div>
+    <div>
+        <div class="flex justify-end">
+            <a href="Login.html" style="width: 110px;" class="py-2 px-6 rounded-full white-button-style m-3 text-lg">Log In</a>
+            <a href="signUp.html" style="width: 122px;" class="py-2 px-6 rounded-full black-button-style m-3 text-lg">Sign Up</a>
+        </div>
+    </div>
+</nav>
+
+<div class="section-two pt-16 pb-20 pl-2">
+    <div class="section-two-box flex flex-col items-center justify-center">
+        <div class="section-two-intro text-center ">
+
+            <h3 class="mt-10">Learn any skill in an easy and fun way !</h3>
+
+            <p class="mt-5 font-semibold">Ungrezi teaches you the BEST skills in an engaging and fun way ! </p>
+            <p class="font-semibold"> Earn rewards, challenge your co-learners and progress !</p>
+            <p class="font-semibold"> Our methodology is very effective, check it yourself!</p>
+            <div class="flex lg:flex-row sm:justify-center sm:flex-col mt-20 mb-20">
+
+                <a href="google.com" class="mr-20">
+                    <img src="assets/png/googlePlay.png" alt="googlePlay">
+                </a>
+                <a href="#" class="m-1 ml-20">
+                    <img src="assets/png/appStore.png" alt="appStore">
+                </a>
+
+            </div>
+        </div>
+    </div>
+</div>
+<div class="section-three pt-16 pb-20 pl-2">
+    <div class=" ">
+
+        <div class="section-three-intro text-center pt-4 mb-20">
+            <h2>EVERY COURSE IS IMMERSIVE !</h2>
+        </div>
+        <div class="flex flex-wrap justify-around mb-20">
+            <div class="course-container flex flex-col items-center mb-0 sm:mb-5 justify-between mb-2">
+                <div class="course-card flex items-center justify-center">
+                    <img class="m-3" src="./assets/svg/icons/PersonalizedLearning.svg" alt="learning"  width="120px"/>
+                </div>
+                <h3>Personalized Learning</h3>
+                <span></span>
+                <p>Ungrezi quickly identifies and <br>
+                    adapts to your learning  <br>
+                    pattern and tailors the <br> 
+                    practice sessions accordingly.</p>
+                    
+            </div>
+            <div class="course-container flex flex-col items-center mb-2">
+                <div class="course-card flex items-center justify-center">
+                    <img class="m-2" src="./assets/svg/icons/Compete.svg" alt="compete"  width="89px"/>
+                </div>
+                <h3>Compete against the World</h3>
+                <span></span>
+                <p>Challenge across the world <br>
+                   and ocmpete against the best.</p>
+            </div>
+            <div class="course-container flex flex-col items-center mb-2">
+                <div class="course-card flex items-center justify-center">
+                    <img class="m-3" src="./assets/svg/icons/ChallengeFriends.svg" alt="challenge friends" width="119px"/>
+                </div>
+                <h3>Challenge Friends</h3>
+                <span></span>
+                <p>Challenge your friends or <br>
+                invite them to play the best <br>
+                learning games.</p>
+            </div>
+        </div>
+        <div class="flex flex-wrap justify-around mb-20  mb-2">
+            <div class="course-container flex flex-col items-center justify-between">
+                <div class="course-card flex items-center justify-center">
+                    <img class="m-3" src="./assets/svg/icons/Notes.svg" alt="learning"  width="114px"/>
+                </div>
+                <h3>Quick Notes and Tips</h3>
+                <span></span>
+                <p>If you are stuck, a quick glance <br>
+                     through the notes and tips <br>
+                      will help.
+                    
+            </div>
+            <div class="course-container flex flex-col items-center mb-2">
+                <div class="course-card flex items-center justify-center">
+                    <img class="m-2" src="./assets/svg/icons/Reward.svg" alt="compete"  width="89px"/>
+                </div>
+                <h3>Rewards for Learning</h3>
+                <span></span>
+                <p>Level up, earn virtual coins <br>
+                and rewards for winning <br>
+                challenges.</p>
+            </div>
+            <div class="course-container flex flex-col items-center mb-2">
+                <div class="course-card flex items-center justify-center">
+                    <img class="m-3" src="./assets/svg/icons/Learning.svg" alt="challenge friends" width="119px"/>
+                </div>
+                <h3>Rapid Learning</h3>
+                <span></span>
+                <p>Spaced Repetition based <br>
+                courses to make sure you <br>
+                remember everything.</p>
+            </div>
+        </div>
+    </div>
+</div>  
+  
+<div class="section-four ">
+    <div class=" mx-auto flex px-5  md:flex-row flex-col items-center">
+        <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6">
+            <img class="-mr-10" src="./assets/svg/illustration/person1.svg" alt="person-books" >
+        </div>
+        <div class="books lg:flex-grow md:w-1/2 lg:pr-2 md:pr-20 flex flex-col md:items-start md:text-left mb-16 md:mb-0 items-center text-center  ">
+                <h2 class="mb-10">Ungrezi Books</h2>
+                <p>We have achieved specialization in developing English
+                learning books in native language of the students via 
+                our innovative <b>Colour Coding Technique</b> , thus 
+                enabling self learning among the students who are 
+                not on the internet grid.</p>
+                <div class="mt-10 sm:ml-20">
+                    <a href="#"><button class="signin-button">EXPLORE BOOKS</button></a>                   
+                </div>
+                
+        </div>
+    </div>
+    <div>
+            <img class="plane " src="assets/svg/illustration/aboutUs/approach/Group 4976.svg">
+        </div>
+</div>
+<div class="section-five pl-2">
+        <div class="institutes flex flex-wrap flex-col justify-around items-center">
+            <h2 class="mt-20 mb-10">Ungrezi for Institutes</h2>
+            <p>Ungrezi’s learning suite, it is a complete growth package for the Learners of your organization. <br>
+            With our effective bite-sized interactive courses, an average learner can increase knowledge <br>
+            equivalent to a semester course by just giving 5 minutes per day for 3 months.</p>
+            <div class="mt-10 mb-10">
+                <a href="#"><button class="signin-button">Try UNGREZI For Your Institute</button></a>
+            </div>
+        </div>
+        <div class="pt-12" >
+            <img class="plane-left -mb-24 -mt-24 -ml-16" src="assets/svg/illustration/aboutUs/approach/Group 4975.svg">
+        </div>
+</div>
+<div class="section-six">
+<div class=" mx-auto flex px-5  md:flex-row flex-col items-center">
+    <div class="books ">
+        <h2 class="mb-10">UNGREZI CREATOR STUDIO</h2>
+        <p>
+            Cheers to all the volunteers contributing to Ungrezi’s mission of free
+            education for all,if you think you have knowledge about some specific 
+            skill which is worth sharing with the world , you can contribute to 
+            developing an existing course or creating a new one from scratch.</p>
+        </p>
+        <div class="mt-10">
+            <a href="#"><button class="signin-button">BECOME A CREATOR</button></a>
+        </div>
+</div>
+    <div class="pt-2 lg:max-w-lg lg:w-full md:w-1/3 w-5/6">
+        <img class="m-2 mx-auto img-abt-us" src="./assets/svg/illustration/person2.svg" alt="person-books">
+    </div>
+</div>
+</div>
+
+<div id="landing-footer">
+    <div class="mb-20">
+        <div class="flex flex-wrap justify-center mb-5">
+            <h2 class="font-bold text-4xl text-white mt-5">LEARN WITH UNGREZI</h2>
+            <a href="#" class="py-2 px-6 rounded-full black-button-style ml-5 mt-5">Get Started</a>
+        </div>
+        <div class="flex flex-col  lg:flex-row md:flex-col  lg:justify-around sm:justify-between">
+            <div class="flex flex-col text-center">
+                <a href="#"><h2 class="text-white">ABOUT</h2></a>
+                <a href="#" class="font-thin text-white mt-4">Learn</a>
+                <a href="#" class="font-thin text-white mt-2"><p>Mission</p></a>
+                <a href="#" class="font-thin text-white mt-2"><p>Methodology</p></a>
+                <a href="#" class="font-thin text-white mt-2"><p>Team</p></a>
+                <a href="#" class="font-thin text-white mt-2"><p>Creator</p></a>
+                <a href="#" class="font-thin text-white mt-2"><p>Careers</p></a>
+            </div>
+            <div class="flex flex-col text-center">
+                <a href="#"><h2 class="text-white">PRODUCTS</h2></a>
+                <a href="#" class="font-thin text-white mt-4"><p>Ungrezi</p></a>
+                <a href="#" class="font-thin text-white mt-2"><p>Books</p></a>
+                <a href="#" class="font-thin text-white mt-2"><p>For business</p></a>
+                <a href="#" class="font-thin text-white mt-2"><p>For institutes</p></a>
+                <a href="#" class="font-thin text-white mt-2"><p>Flipingo</p></a>
+            </div>
+            <div class="flex flex-col text-center">
+                <a href="apps.html"><h2 class="text-white">APPS</h2></a>
+                <a href="#" class="font-thin text-white mt-4"><p>Ungrezi <br> (Android)</p></a>
+                <a href="#" class="font-thin text-white mt-2"><p>Ungrezi <br> (ios)</p></a>
+                <a href="#" class="font-thin text-white mt-2"><p>Flipingo <br> (Andriod)</p></a>
+                <a href="#" class="font-thin text-white mt-2"><p>Flipingo <br> (ios)</p></a>
+                <a href="#" class="font-thin text-white mt-2"><p>Engramme</p></a>
+            </div>
+            <div class="flex flex-col text-center">
+                <a href="#"><h2 class="text-white">QUICK LINKS</h2></a>
+                <a href="#" class="font-thin text-white mt-4"><p>English via Hindi</p></a>
+                <a href="#" class="font-thin text-white mt-2"><p>English via French</p></a>
+                <a href="#" class="font-thin text-white mt-2"><p>English via Bangla</p></a>
+                <a href="#" class="font-thin text-white mt-2"><p>Science in Hindi</p></a>
+                <a href="#" class="font-thin text-white mt-2"><p>Maths in Hindi</p></a>
+                <a href="#" class="font-thin text-white mt-2"><p>Computer Science <br> and programming</p></a>
+                <a href="#" class="font-thin text-white mt-2"><p>Marketing and Sales</p></a>
+                <a href="#" class="font-thin text-white mt-2"><p>Management <br> and Operation</p></a>
+            </div>
+            <div class="flex flex-col text-center">
+                <a href="#"><h2 class="text-white">HELP & SUPPORT</h2></a>
+                <a href="#" class="font-thin text-white mt-4"><p>Discussion</p></a>
+                <a href="#" class="font-thin text-white mt-2"><p>Troubleshooting</p></a>
+                <a href="#" class="font-thin text-white mt-2"><p>Learner FAQ</p></a>
+                <a href="#" class="font-thin text-white mt-2"><p>Creator FAQ</p></a>
+                <a href="#" class="font-thin text-white mt-2"><p>Institute FAQ</p></a>
+            </div>
+            <div class="flex flex-col text-center">
+                <a href="#"><h2 class="text-white">PRIVACY & TERMS</h2></a>
+                <a href="#" class="font-thin text-white mt-4"><p>Community <br> Guidelines</p></a>
+                <a href="#" class="font-thin text-white mt-2"><p>Terms</p></a>
+                <a href="#" class="font-thin text-white mt-2"><p>Privacy</p></a>
+                <a href="#" class="font-thin text-white mt-2"><p>Your DATA is yours</p></a>
+            </div>
+        </div>    
+    </div>       
+</div>
+<div class="footer flex justify-center">
+
+    <div class="trapezium bottom-0 justify-center">
+        <div class="container absolute top-0 left-0">
+            <div class="prev mb-2s">
+                <div class="arrow-left"></div>
+            </div>
+            <ul class="slider">
+                <li class="visible">
+                    <a href="index.html" class="font-thin flex flex-row mt-2 mb-2 items-center">
+                        <img class="mr-2" src="assets/svg/flags/espanol.svg" width="49px" alt="espanol-flag">
+                        español</a>
+                </li>
+                <li>  <a href="#" class="font-thin flex flex-row mt-2 mb-2  items-center">
+                    <img class="mr-2" src="assets/svg/flags/deutsche.svg" width="49px" alt="deutsche-flag">
+                    deutsche</a>
+                <li>
+                    <a href="#" class="font-thin flex flex-row mt-2 mb-2  items-center">
+                        <img class="mr-2" src="assets/svg/flags/francias.svg" width="49px" alt="france-flag">
+                        français</a>
+              </li>
+              <li> <a  href="#" class="font-thin flex flex-row mt-2 mb-2 items-center">
+                <img class="mr-2" src="assets/svg/flags/portugues.svg" width="49px" alt="portugal-flag">
+                português</a>
+            </li>
+            <li>
+                <a href="#" class="font-thin flex flex-row mt-2 mb-2 items-center">
+                    <img class="mr-2" src="assets/svg/flags/italiano.svg" width="49px" alt="italiano-flag">
+                    italiano</a>
+            </li>
+            <li>
+                <a href="#" class="font-thin flex flex-row mt-2 mb-2 items-center">
+                    <img class="mr-2" src="assets/svg/flags/japan.svg" width="49px" alt="japan-flag">
+                    日本人 </a>
+            </li>
+            <li>
+                <a href="#" class="font-thin flex flex-row mt-2 mb-2 items-center">
+                    <img class="mr-2" src="assets/svg/flags/nederlands.svg" width="49px" alt="nederlands-flag">
+                    nederlands</a>
+            </li>
+            </ul>
+            <div class="next">
+                <div class="arrow-right"></div>
+            </div>
+        </div>
+    </div>
+    <p>
+        <br>
+    </p>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="script.js"></script>
+    <script>
+        var prev = document.querySelector('div.prev');
+var next = document.querySelector('div.next');
+var index = 0;
+var lis = document.querySelectorAll('ul.slider li');
+var count = lis.length;
+
+prev.addEventListener('click', function() {
+    lis[index].classList.remove('visible');
+    index--;
+    if (index < 0){
+        index = count-1;
+    }
+
+    lis[index].classList.add('visible');
+});
+
+next.addEventListener('click', function() {
+    lis[index].classList.remove('visible');
+    index++;
+    if (index > count-1){
+        index = 0;
+    }
+
+    lis[index].classList.add('visible');
+});
+    </script>
+    <script>
+        AOS.init();
+      </script>
+    <script>
+        $(document).ready(function() {
+            $("#color_mode").on("change", function () {
+                colorModePreview(this);
+
+            })
+        });
+        
+        function colorModePreview(ele) {
+            if($(ele).prop("checked") == true){
+        
+            }
+            else if($(ele).prop("checked") == false){
+                
+            }
+        }
+    </script>
+    <script>
+        $('.multi-field-wrapper').each(function() {
+            var $wrapper = $('.multi-fields', this);
+            $(".add-field", $(this)).click(function(e) {
+                $('.multi-field:first-child', $wrapper).clone(true).appendTo($wrapper).find('input').val('').focus();
+            });
+            $('.multi-field .remove-field', $wrapper).click(function() {
+                if ($('.multi-field', $wrapper).length > 1)
+                    $(this).parent('.multi-field').remove();
+            });
+        });
+    </script>
+</body>
+</html>

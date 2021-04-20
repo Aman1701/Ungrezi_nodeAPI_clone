@@ -1,0 +1,25 @@
+Instructions to run API
+
+Requirements: NodeJS , PM2(Only for production server)
+
+For development:
+
+Command - node index.js
+CORS - specify for local react app
+Database - Change the connection url in /startup/db.js
+
+
+For Production:
+
+In production system the api runs under pm2 Process manager.
+Command - pm2 start index.js --name Ungrezi (Required only once which is already done in server)
+
+Note - The api folder is at /home/ubuntu/api in the Ungrezi EC2 instance.
+After changing the code, replace the files at in api folder and run command - pm2 restart all
+Observer the process by command - "pm2 monit" and make sure server gives no errors 
+
+CORS - allow all or specify ungrezi domains
+Database - change the connection url accordingly
+
+
+ 

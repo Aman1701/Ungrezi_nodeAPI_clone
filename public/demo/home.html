@@ -1,0 +1,78 @@
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ungrezi</title>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      .questions {
+        display: flex;
+        flex-flow: column;
+        width: 20%;
+      }
+      .questions a {
+        font-size:20px;
+        margin-bottom:10px;
+      }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css"
+      integrity="sha512-MoRNloxbStBcD8z3M/2BmnT+rg4IsMxPkXaGh2zD6LGNNFE80W3onsAhRcMAMrSoyWL9xD7Ert0men7vR8LUZg=="
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <!-- <h1 class="text-center">Welcome</h1>
+    <a class="btn btn-primary m-5" href="/creator-mode.html">Add Question</a>
+
+    <h3 class="ml-5 mb-3">List of Questions</h3>
+    <div class="questions list-group ml-5"></div>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.bundle.min.js"
+      integrity="sha512-kBFfSXuTKZcABVouRYGnUo35KKa1FBrYgwG4PAx7Z2Heroknm0ca2Fm2TosdrrI356EDHMW383S3ISrwKcVPUw=="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      $.get("/question/getBlockQuestions", function (data) {
+        let num = 1;
+        data.forEach((element) => {
+          $(".questions").append(
+            '<a class="list-group-item" target="_blank" href="/question/block/' +
+              element._id +
+              '">Question ' +
+              num++ +
+              "</a>"
+          );
+        });
+      });
+    </script> -->
+
+    <h1 class="text-center">Welcome</h1>
+    <a class="btn btn-primary m-5" href="/demo/match-question-add.html" target="_blank">Add Question</a>
+
+    <h3 class="ml-5 mb-3">List of Questions</h3>
+    <div class="questions list-group ml-5"></div>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/js/bootstrap.bundle.min.js"
+      integrity="sha512-kBFfSXuTKZcABVouRYGnUo35KKa1FBrYgwG4PAx7Z2Heroknm0ca2Fm2TosdrrI356EDHMW383S3ISrwKcVPUw=="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      $.get("/question/getBlockMatchQuestions", function (data) {
+        let num = 1;
+        data.forEach((element) => {
+          $(".questions").append(
+            '<a class="list-group-item" target="_blank" href="/question/blockMatch/' +
+              element._id +
+              '">Question ' +
+              num++ +
+              "</a>"
+          );
+        });
+      });
+    </script>
+
+  </body>
+</html>

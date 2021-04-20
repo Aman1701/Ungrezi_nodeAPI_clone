@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ungrezi</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet">
+    <style>
+        .progress-bar {
+    background-color: #1a1a1a;
+    height: 25px;
+    padding: 4px;
+    width: 100%;
+    margin: 50px 0;
+    border-radius: 5px;
+    box-shadow: 0 1px 5px #000 inset, 0 1px 0 #444;
+  }
+
+  .progress-bar span {
+    display: inline-block;
+    height: 100%;
+    border-radius: 3px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
+    transition: width .4s ease-in-out;
+  }
+  .blue span {
+    background-color: #34c2e3;
+  }
+
+  .shine span {
+    position: relative;
+  }
+
+  .shine span::after {
+    content: '';
+    opacity: 0;
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background: #fff;
+    border-radius: 3px;
+    animation: animate-shine 2s ease-out infinite;
+  }
+
+  @keyframes animate-shine {
+    0% {
+      opacity: 0;
+      width: 0;
+    }
+    50% {
+      opacity: .5;
+    }
+    100% {
+      opacity: 0;
+      width: 95%;
+    }
+  }
+
+  .stripes span {
+    background-size: 30px 30px;
+    background-image: linear-gradient(135deg, rgba(255, 255, 255, .15) 25%,
+                      transparent 25%,
+                      transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%,
+                      transparent 75%, transparent);
+    animation: animate-stripes 3s linear infinite;
+  }
+
+  @keyframes animate-stripes {
+    0% {
+      background-position: 0 0;
+    }
+    100% {
+      background-position: 60px 0;
+    }
+  }
+    </style>
+</head>
+<body>  
+  <div class="navbar-two pb-2 sticky top-0">
+    <div class="container mx-auto flex flex-wrap flex-col md:flex-row items-center ">
+      
+        <div class="logo">
+          <img class="inline-block" src="./logo-b.png" alt="ungrezi-logo" width="150px">
+        </div>
+    </div>
+  </div>
+<div style="background-color:#ebfdff; height: 100vh;">
+<div class="app-section-one">
+
+  <div class="container px-5 py-4 mx-auto">
+    <div class="progress-bar blue shine">
+        <span style="width: 40%"></span>
+      </div>
+     
+    <h1 class="text-center pb-12">Choose the Correct Option</h1>
+      
+        
+           <div class="quiz-img mx-auto">                      
+               <img class="learn-img " src="assets/svg/illustration/student1/Group 6249.svg">
+            </div>         
+
+       
+        <form>
+          <div class="choice-background mx-auto">
+            <input type="radio" id="ans" name="option" >
+            <label>Option 1</label>
+          </div>
+          <div class="choice-background mx-auto">
+            <input type="radio" id="female" name="option">
+            <label>Option 2</label>
+          </div>
+          <div class="choice-background mx-auto">
+            <input type="radio" id="other" name="option">
+            <label>Option 3</label>
+          </div>
+        </form>
+  
+       
+        <button class="sm:mr-20 mb-12 check-btn float-right">Check</button>  
+    </div>
+    
+  </div>
+ </div>
+</div>
+  </body>
+  </html>

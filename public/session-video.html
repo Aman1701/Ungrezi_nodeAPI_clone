@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+      integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l"
+      crossorigin="anonymous"
+    />
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Noto Sans", sans-serif;
+      }
+
+      body,
+      html {
+        background-color: rgb(255, 254, 254);
+        height: 100%;
+      }
+
+      .session-live {
+        padding: 20px;
+        text-align: center;
+      }
+
+      .container {
+        margin-top: 70px;
+        padding: 0 15px 20px 0;
+        margin-bottom: 25px;
+      }
+
+      .main-content {
+        margin-top: 15px;
+      }
+
+      .session-content {
+        background-color: rgb(250, 250, 250);
+        box-shadow: 3px 3px 10px 10px rgba(25, 156, 218, 0.6);
+        padding: 15px;
+        height: 100%;
+      }
+
+      #publisher,
+      #subscriber,
+      #participants {
+        margin-left: 35px;
+      }
+
+      #participants {
+        font-family: "Noto Sans", sans-serif;
+        align-items: center;
+        font-size: 25px;
+        margin-bottom: 20px;
+        font-weight: 500;
+      }
+
+      #subscriber {
+        margin-bottom: 25px;
+      }
+    </style>
+    <title>Join Session</title>
+  </head>
+  <body>
+    <h1 class="session-live">Welcome to the live session !!!</h1>
+    <div class="container">
+      <div class="row">
+        <div class="main-content col-lg-10 col-md-8 col-sm-12">
+          <div class="session-content">
+            lorem ipsum dolor sit amet, consectet lorem ipsum lorem ipsum dolor
+            lorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+            dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum dolorlorem ipsum
+          </div>
+        </div>
+        <div class="col-lg-2 col-md-4">
+          <div id="participants">Participants</div>
+          <div id="subscriber"></div>
+          <div id="publisher"></div>
+        </div>
+      </div>
+    </div>
+    <script src="https://static.opentok.com/v2/js/opentok.min.js"></script>
+    <script>
+      fetch(location.pathname, {
+        method: "POST",
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          const session = OT.initSession(data.apiKey, data.sessionId);
+          const publisher = OT.initPublisher("publisher");
+          session.connect(data.token, function () {
+            session.publish(publisher);
+          });
+
+          session.on("streamCreated", function (event) {
+            session.subscribe(event.stream, "subscriber");
+          });
+        });
+    </script>
+  </body>
+</html>
